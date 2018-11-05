@@ -1,0 +1,59 @@
+package com.sys.test;
+
+import java.util.List;
+
+import com.sys.model.Goods;
+import com.sys.service.GoodsService;
+import com.sys.serviceImpl.GoodsServiceImpl;
+
+/**
+ * 商品业务层测试
+ * 
+ * @author Administrator
+ *
+ */
+public class GoodsServiceImplTest {
+
+	public static void main(String[] args) {
+		// queryGoods();
+		delGoods();
+		// updateGoods();
+		// addGoods();
+	}
+
+	public static void addGoods() {
+		GoodsService GoodsService = new GoodsServiceImpl();
+		Goods goods = new Goods();
+		goods.setG_name("6554");
+		goods.setG_describe("789789");
+		goods.setG_sort(5);
+		int num = GoodsService.addGoods(goods);
+		if (num == 1)
+			System.out.println("添加商品成功");
+	}
+
+	public static void queryGoods() {
+		GoodsService GoodsService = new GoodsServiceImpl();
+		List<Goods> list = GoodsService.queryGoods();
+		for (Goods goods : list) {
+			System.out.println(goods);
+		}
+	}
+
+	public static void delGoods() {
+		GoodsService GoodsService = new GoodsServiceImpl();
+		int num = GoodsService.delGoods(11);
+		if (num == 1)
+			System.out.println("删除商品成功");
+	}
+
+	public static void updateGoods() {
+		GoodsService GoodsService = new GoodsServiceImpl();
+		Goods goods = new Goods();
+		goods.setG_name("11112222");
+		int num = GoodsService.updateGoods(11, goods);
+		if (num == 1)
+			System.out.println("修改商品成功");
+	}
+
+}

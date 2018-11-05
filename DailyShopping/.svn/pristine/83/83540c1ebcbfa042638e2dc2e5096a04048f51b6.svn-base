@@ -1,0 +1,48 @@
+package com.sys.daoImpl;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.sys.dao.BaseDao;
+import com.sys.dao.O_statusDao;
+import com.sys.model.O_Status;
+
+public class O_statusDaoImpl extends BaseDao implements O_statusDao {
+
+	public O_statusDaoImpl(Connection conn) {
+		super(conn);
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public int updateO_status(O_Status o_Status) throws SQLException {
+		int num=0;
+		String sql="update o_status set o_statusname=?,o_statusnumber=? where o_statusID=?"; 
+		Object[] params=new Object[3];
+		params[0]=o_Status.getO_statusname();
+		params[1]=o_Status.getO_statusnumber();
+		params[2]=o_Status.getO_statusID();
+		num=super.executeUpdate(sql, params);
+		return num;
+	}
+
+	@Override
+	public List<O_Status> getAllO_status() throws SQLException {
+		List<O_Status> list=new ArrayList<O_Status>();
+		String sql="select o_statusID,o_statusname,o_statusnumber from o_status";
+		O_Status o_Status=null;
+		ResultSet rs=super.executeQuery(sql);
+		while(rs.next()) {
+			o_Status=new O_Status();
+			o_Status.setO_statusID(rs.getInt("o_statusID"));
+			o_Status.setO_statusname(rs.getString("o_statusname"));
+			o_Status.setO_statusnumber(rs.getInt("o_statusnumber"));
+			list.add(o_Status);
+		}
+		return list;
+	}
+
+}

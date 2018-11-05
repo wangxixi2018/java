@@ -1,0 +1,81 @@
+package com.sys.serviceImpl;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.List;
+
+import com.sys.dao.GoodsDao;
+import com.sys.daoImpl.GoodsDaoImpl;
+import com.sys.model.Goods;
+import com.sys.service.GoodsService;
+import com.sys.util.JDBCUtil;
+
+/**
+ * 商品Service 业务层接口实现
+ * 
+ * @author Administrator
+ *
+ */
+public class GoodsServiceImpl implements GoodsService {
+
+	@Override
+	public int addGoods(Goods goods) {
+		Connection conn = null;
+		try {
+			conn = JDBCUtil.getConnection();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		GoodsDao goodsDao = new GoodsDaoImpl(conn);
+		int num = goodsDao.addGoods(goods);
+		JDBCUtil.closeAll(conn, null, null);
+		return num;
+	}
+
+	@Override
+	public int delGoods(int g_ID) {
+		Connection conn = null;
+		try {
+			conn = JDBCUtil.getConnection();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		GoodsDao goodsDao = new GoodsDaoImpl(conn);
+		int num = goodsDao.delGoods(g_ID);
+		JDBCUtil.closeAll(conn, null, null);
+		return num;
+	}
+
+	@Override
+	public int updateGoods(int g_ID, Goods goods) {
+		Connection conn = null;
+		try {
+			conn = JDBCUtil.getConnection();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		GoodsDao goodsDao = new GoodsDaoImpl(conn);
+		int num = goodsDao.updateGoods(g_ID, goods);
+		JDBCUtil.closeAll(conn, null, null);
+		return num;
+	}
+
+	@Override
+	public List<Goods> queryGoods() {
+		Connection conn = null;
+		try {
+			conn = JDBCUtil.getConnection();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		GoodsDao goodsDao = new GoodsDaoImpl(conn);
+		List<Goods> list = goodsDao.queryGoods();
+		JDBCUtil.closeAll(conn, null, null);
+		return list;
+	}
+
+}

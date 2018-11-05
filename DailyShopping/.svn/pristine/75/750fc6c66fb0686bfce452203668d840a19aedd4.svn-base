@@ -1,0 +1,89 @@
+package com.sys.daoImpl;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.sys.dao.BaseDao;
+import com.sys.dao.G_InfoDao;
+import com.sys.model.G_Info;
+
+public class G_InfoDaoImpl extends BaseDao implements G_InfoDao {
+
+	public G_InfoDaoImpl(Connection conn) {
+		super(conn);
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public int addG_Info(G_Info g_Info) {
+		String sql = "INSERT INTO G_Info (g_ID,g_number,g_colorsID,g_sizeID,g_integral,g_g_price) VALUES (?,?,?,?,?,?)";
+		return super.executeUpdate(sql, g_Info.getG_ID(), g_Info.getG_number(), g_Info.getG_colorsID(),
+				g_Info.getG_sizeID(), g_Info.getG_integral(), g_Info.getG_g_price());
+	}
+
+	@Override
+	public int delG_Info(int g_InfoID) {
+		String sql = "DELETE FROM g_info WHERE g_InfoID=?";
+		return super.executeUpdate(sql, g_InfoID);
+	}
+
+	@Override
+	public int updateG_Info(int g_InfoID, G_Info g_Info) {
+		StringBuffer sql = new StringBuffer("UPDATE g_info SET ");
+		if (g_Info != null) {
+			if (g_Info.getG_ID() != 0) {
+				sql.append("g_ID=" + g_Info.getG_ID() + ",");
+			}
+			if (g_Info.getG_colorsID() != 0) {
+				sql.append("g_colorsID=" + g_Info.getG_colorsID() + ",");
+			}
+			if (g_Info.getG_number() != 0) {
+				sql.append("g_number=" + g_Info.getG_number() + ",");
+			}
+			if (g_Info.getG_sizeID() != 0) {
+				sql.append("g_sizeID=" + g_Info.getG_sizeID() + ",");
+			}
+			if (g_Info.getG_integral() != 0) {
+				sql.append("g_integral=" + g_Info.getG_integral() + ",");
+			}
+			if (g_Info.getG_g_price() != 0) {
+				sql.append("g_g_price=" + g_Info.getG_g_price() + ",");
+			}
+			sql.replace(sql.length() - 1, sql.length(), " ");
+			sql.append("WHERE g_InfoID=? ");
+		} else {
+			return 0;
+		}
+
+		return super.executeUpdate(sql.toString(), g_InfoID);
+	}
+
+	@Override
+	public List<G_Info> queryG_Info() {
+		String sql = "SELECT g_InfoID,g_ID,g_number,g_colorsID,g_sizeID,g_integral,g_g_price FROM g_info";
+		ResultSet resultSet = super.executeQuery(sql);
+		G_Info g_Info = null;
+		List<G_Info> list = new ArrayList<G_Info>();
+		try {
+			while (resultSet.next()) {
+				g_Info = new G_Info();
+				g_Info.setG_InfoID(resultSet.getInt("g_InfoID"));
+				g_Info.setG_ID(resultSet.getInt("g_ID"));
+				g_Info.setG_number(resultSet.getInt("g_number"));
+				g_Info.setG_colorsID(resultSet.getInt("g_colorsID"));
+				g_Info.setG_sizeID(resultSet.getInt("g_sizeID"));
+				g_Info.setG_integral(resultSet.getInt("g_integral"));
+				g_Info.setG_g_price(resultSet.getInt("g_g_price"));
+				list.add(g_Info);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+}

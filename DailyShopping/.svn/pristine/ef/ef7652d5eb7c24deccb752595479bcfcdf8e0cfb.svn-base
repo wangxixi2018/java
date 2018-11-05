@@ -1,0 +1,93 @@
+package com.sys.test;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.sys.dao.OrdertakeSiteDao;
+import com.sys.daoImpl.OrdertakeSiteDaoImpl;
+import com.sys.model.OrdertakeSite;
+import com.sys.util.JDBCUtil;
+
+public class OrdertakeSiteDaoTest {
+
+	public static void main(String[] args) {
+		//新增收获地址测试
+		Connection conn=null;
+		try {
+			conn=JDBCUtil.getConnection();
+			OrdertakeSiteDao ordertakesiteDao=new OrdertakeSiteDaoImpl(conn);
+			String o_name="小明";
+			String o_phone="13596789456";
+			String o_add="新都区1号";
+			OrdertakeSite ordertakesite=new OrdertakeSite();
+			ordertakesite.setO_name(o_name);
+			ordertakesite.setO_phone(o_phone);
+			ordertakesite.setO_add(o_add);
+			int num=ordertakesiteDao.addOrdertakeSite(ordertakesite);
+			if(num>0) {
+				System.out.println("添加收获地址成功");
+			}else {
+				System.out.println("添加收获地址失败");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//删除收获地址测试
+		try {
+			conn=JDBCUtil.getConnection();
+			OrdertakeSiteDao ordertakesiteDao=new OrdertakeSiteDaoImpl(conn);
+			int o_takeSiteID=4;
+			int num=ordertakesiteDao.delOrdertakeSite(o_takeSiteID);
+			if(num>0) {
+				System.out.println("删除收获地址成功");
+			}else {
+				System.out.println("删除收获地址失败");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//修改收获地址测试
+		try {
+			conn=JDBCUtil.getConnection();
+			OrdertakeSiteDao ordertakesiteDao=new OrdertakeSiteDaoImpl(conn);
+			int o_takeSiteID=5;
+			String o_name="小明明";
+			String o_phone="13596789494";
+			String o_add="新都区2号";
+			OrdertakeSite ordertakesite=new OrdertakeSite();
+			ordertakesite.setO_takeSiteID(o_takeSiteID);
+			ordertakesite.setO_name(o_name);
+			ordertakesite.setO_phone(o_phone);
+			ordertakesite.setO_add(o_add);
+			int num=ordertakesiteDao.updateOrdertakeSite(ordertakesite);
+			if(num>0) {
+				System.out.println("修改收获地址成功");
+			}else {
+				System.out.println("修改收获地址失败");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//查询收获地址测试
+		try {
+			conn=JDBCUtil.getConnection();
+			OrdertakeSiteDao ordertakesiteDao=new OrdertakeSiteDaoImpl(conn);
+			List<OrdertakeSite> list=new ArrayList<OrdertakeSite>();
+			list=ordertakesiteDao.getAllOrdertakeSite();
+			if(list==null) {
+				System.out.println("查询收获地址失败");
+			}else {
+				System.out.println("查询收获地址成功");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+}

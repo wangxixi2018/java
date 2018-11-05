@@ -1,0 +1,34 @@
+package com.sys.test;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.sys.dao.O_InfoDao;
+import com.sys.daoImpl.O_InfoDaoImpl;
+import com.sys.model.O_Info;
+import com.sys.util.JDBCUtil;
+
+public class O_InfoDaoTest {
+
+	public static void main(String[] args) {
+		//查询订单详情测试
+		Connection conn=null;
+		try {
+			conn=JDBCUtil.getConnection();
+			O_InfoDao oinfoDao=new O_InfoDaoImpl(conn);
+			List<O_Info> list=new ArrayList<O_Info>();
+			list=oinfoDao.getAllO_Info();
+			if(list==null) {
+				System.out.println("查询订单详情失败");
+			}else {
+				System.out.println("查询订单详情成功");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+}

@@ -1,0 +1,36 @@
+package com.sys.test;
+
+import com.sys.model.News;
+import com.sys.service.NewsService;
+import com.sys.serviceImpl.NewsServiceImpl;
+
+public class NewsServiceTest {
+	
+	public static void main(String[] args) {
+		NewsService service=new NewsServiceImpl();
+		//查询测试
+		//System.out.println(service.GetAllNews());
+		//添加测试
+		/*
+		News news=new News();
+		news.setN_sortid(1);
+		news.setN_content("service添加测试");
+		news.setN_title("service标题添加测试");
+		service.AddNews(news);
+		*/
+		//删除测试
+		//service.DelNews(6);
+		
+		
+		/*
+		修改测试 
+		News news=new News();
+		news.setN_Id(4);
+		news.setN_content("修改servce测试");
+		news.setN_title("修改service测试");
+		service.UpdateNews(news);
+		*/
+		System.out.println(service.GetNewsById(5));
+		
+	}
+}

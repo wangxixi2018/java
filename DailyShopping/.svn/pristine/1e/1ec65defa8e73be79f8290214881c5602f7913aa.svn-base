@@ -1,0 +1,81 @@
+package com.sys.daoImpl;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.sys.dao.BaseDao;
+import com.sys.dao.GoodsMapDao;
+import com.sys.model.GoodsMap;
+
+/**
+ * 商品图库刀层实现
+ * 
+ * @author Administrator
+ *
+ */
+public class GoodsMapDaoImpl extends BaseDao implements GoodsMapDao {
+
+	public GoodsMapDaoImpl(Connection conn) {
+		super(conn);
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public int addGoodsMap(GoodsMap goodsMap) {
+		String sql = "INSERT INTO goodsMap (g_ID,g_src,g_rank) VALUES (?,?,?)";
+		return super.executeUpdate(sql, goodsMap.getG_ID(), goodsMap.getG_src(), goodsMap.getG_rank());
+	}
+
+	@Override
+	public int delGoodsMap(int g_Map) {
+		String sql = "DELETE FROM goodsMap WHERE g_Map=?";
+		return super.executeUpdate(sql, g_Map);
+	}
+
+	@Override
+	public int updateGoodsMap(int g_Map, GoodsMap goodsMap) {
+		StringBuffer sql = new StringBuffer("UPDATE goodsMap SET ");
+		if (goodsMap != null) {
+			if (goodsMap.getG_ID() != 0) {
+				sql.append("g_ID=" + goodsMap.getG_ID() + ",");
+			}
+			if (goodsMap.getG_src() != null) {
+				sql.append("g_src=" + goodsMap.getG_src() + ",");
+			}
+			if (goodsMap.getG_rank() != 0) {
+				sql.append("g_rank=" + goodsMap.getG_rank() + ",");
+			}
+			sql.replace(sql.length() - 1, sql.length(), " ");
+			sql.append("WHERE g_Map =? ");
+		} else {
+			return 0;
+		}
+		return super.executeUpdate(sql.toString(), g_Map);
+	}
+
+	@Override
+	public List<GoodsMap> queryGoodsMap() {
+		String sql = "SELECT g_Map,g_ID,g_src,g_rank FROM goodsMap";
+		ResultSet resultSet = super.executeQuery(sql);
+		GoodsMap goodsMap = null;
+		List<GoodsMap> list = new ArrayList<GoodsMap>();
+		try {
+			while (resultSet.next()) {
+				goodsMap = new GoodsMap();
+				goodsMap.setG_Map(resultSet.getInt("g_Map"));
+				goodsMap.setG_ID(resultSet.getInt("g_ID"));
+				goodsMap.setG_src(resultSet.getString("g_src"));
+				goodsMap.setG_rank(resultSet.getInt("g_rank"));
+				list.add(goodsMap);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+}

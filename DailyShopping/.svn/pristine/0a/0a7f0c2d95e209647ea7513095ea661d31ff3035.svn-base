@@ -1,0 +1,74 @@
+package com.sys.servlet;
+
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.sys.dao.G_ColorsDao;
+import com.sys.dao.G_SizeDao;
+import com.sys.daoImpl.G_ColorsDaoImpl;
+import com.sys.daoImpl.G_SizeDaoImpl;
+import com.sys.model.G_Colors;
+import com.sys.model.G_Size;
+import com.sys.util.JDBCUtil;
+
+/**
+ * 商品数据交换类
+ * 
+ * @author Administrator
+ *
+ */
+@WebServlet("/file.dos")
+public class GoodsServlet extends HttpServlet {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		this.doPost(req, resp);
+
+	}
+
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		System.out.println(123);
+		Connection conn = null;
+		List<G_Colors> G_Colors = null;
+		List<G_Size> G_Size = null;
+		try {
+			conn = JDBCUtil.getConnection();
+			G_ColorsDao G_ColorsDao = new G_ColorsDaoImpl(conn);
+			G_SizeDao G_SizeDao = new G_SizeDaoImpl(conn);
+			G_Colors = G_ColorsDao.queryG_Colors();
+			G_Size = G_SizeDao.queryG_Size();
+			JDBCUtil.closeAll(conn, null, null);
+
+			req.setAttribute("G_Colors", G_Colors);
+			req.setAttribute("G_Size", G_Size);
+
+			// resp.sendRedirect("/123.jsp");
+			req.getRequestDispatcher("uploadTest.jsp").forward(req, resp);
+
+			/*
+			 * String json = JSON.toJSONString(list); PrintWriter out = resp.getWriter();
+			 * out.write(json); out.close();
+			 */
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCUtil.closeAll(conn, null, null);
+		}
+	}
+}

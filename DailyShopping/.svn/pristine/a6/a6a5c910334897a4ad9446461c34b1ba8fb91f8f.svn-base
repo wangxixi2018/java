@@ -1,0 +1,58 @@
+package com.sys.model;
+
+import java.io.Serializable;
+
+/**
+ * 商品类
+ * 
+ * @author Administrator
+ * 
+ */
+public class Goods implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private int g_ID;
+	private int g_sort;
+	private String g_name;
+	private String g_describe;
+
+	public int getG_ID() {
+		return g_ID;
+	}
+
+	public void setG_ID(int g_ID) {
+		this.g_ID = g_ID;
+	}
+
+	public int getG_sort() {
+		return g_sort;
+	}
+
+	public void setG_sort(int g_sort) {
+		this.g_sort = g_sort;
+	}
+
+	public String getG_name() {
+		return g_name;
+	}
+
+	public void setG_name(String g_name) {
+		this.g_name = g_name;
+	}
+
+	public String getG_describe() {
+		return g_describe;
+	}
+
+	public void setG_describe(String g_describe) {
+		this.g_describe = g_describe;
+	}
+
+	@Override
+	public String toString() {
+		return "Goods [g_ID=" + g_ID + ", g_sort=" + g_sort + ", g_name=" + g_name + ", g_describe=" + g_describe + "]";
+	}
+
+}

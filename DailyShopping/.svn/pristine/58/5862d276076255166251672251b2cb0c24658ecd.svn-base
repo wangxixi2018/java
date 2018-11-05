@@ -1,0 +1,29 @@
+package com.sys.test;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.List;
+
+import com.sys.dao.UserDao;
+import com.sys.daoImpl.UserDaoImpl;
+import com.sys.model.User;
+import com.sys.util.JDBCUtil;
+
+public class DaoTest {
+	public static void main(String[] args) {
+		Connection conn=null;
+		try {
+			conn = JDBCUtil.getConnection();
+			UserDao user_loginDao = new UserDaoImpl(conn);
+			List<User> list = user_loginDao.getLogin();
+			for(User u:list){
+				System.out.println(u.getU_loginName()+"|"+u.getU_loginPwd());
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			JDBCUtil.closeAll(conn, null, null);
+		}
+		
+	}
+}

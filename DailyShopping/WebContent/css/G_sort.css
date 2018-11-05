@@ -1,0 +1,74 @@
+﻿	.pages {
+          float: right;
+          position: relative;
+          font-size: 10pt;
+      }
+
+      .pages > .pager {
+          display: block;
+          position: relative;
+      }
+
+      .pages ul li {
+          list-style: none;
+          float: left;
+          margin: 0 3px;
+          min-width: 37px;
+      }
+
+      .pages ul li.next,
+      .pages ul li.prev {
+          width: auto;
+      }
+
+      .pages ul li.disable a {
+          color: #848c94;
+      }
+
+      .pages ul li.text {
+          display: block;
+          height: 30px;
+          line-height: 30px;
+          text-align: center;
+          border: 0px;
+          color: black;
+          border-radius: 2px;
+          -webkit-border-radius: 2px;
+          -moz-border-radius: 2px;
+      }
+
+      .pages ul li.text input.go {
+          width: 25px;
+      }
+      .pages ul li.text select.go {
+          padding:2px 2px;
+      }
+      .pages ul li.text span.go {
+          color: #848c94;
+          margin-left: 2px;
+          cursor: pointer;
+          background-color: silver;
+          padding: 4px;
+          border-radius: 2px;
+          -webkit-border-radius: 2px;
+          -moz-border-radius: 2px;
+      }
+
+      .pages ul li a {
+          display: block;
+          /*width: 24px;*/
+         padding: 0 7px;
+         height: 26px;
+         line-height: 26px;
+         text-align: center;
+         border: 1px solid #848c94;
+         color: black;
+         border-radius: 2px;
+         -webkit-border-radius: 2px;
+         -moz-border-radius: 2px;
+     }
+
+     .pages ul li a:hover,
+     .pages ul li.active a {
+         background-color: #ff550a;
+     }

@@ -1,0 +1,34 @@
+package com.sys.service;
+
+import java.util.List;
+
+import com.sys.model.Goods;
+
+/**
+ * 商品Service 业务层接口
+ * 
+ * @author Administrator
+ *
+ */
+public interface GoodsService {
+	/**
+	 * 添加商品
+	 */
+	int addGoods(Goods goods);
+
+	/**
+	 * 删除商品
+	 * 
+	 */
+	int delGoods(int g_ID);
+
+	/**
+	 * 修改商品
+	 */
+	int updateGoods(int g_ID, Goods goods);
+
+	/**
+	 * 查询所有商品
+	 */
+	List<Goods> queryGoods();
+}

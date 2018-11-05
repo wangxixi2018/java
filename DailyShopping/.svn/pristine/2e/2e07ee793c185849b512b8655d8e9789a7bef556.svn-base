@@ -1,0 +1,13 @@
+package com.sys.dao;
+
+import java.sql.SQLException;
+import java.util.List;
+
+import com.sys.model.O_Status;
+
+public interface O_statusDao {
+   //修改订单状态
+	public int updateO_status(O_Status o_Status) throws SQLException; 
+   //查询订单状态
+	public List<O_Status> getAllO_status() throws SQLException;
+}

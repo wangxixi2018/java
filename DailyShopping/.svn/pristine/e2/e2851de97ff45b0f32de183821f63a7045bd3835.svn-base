@@ -1,0 +1,63 @@
+package com.sys.test;
+
+import java.util.List;
+
+import com.sys.model.G_Info;
+import com.sys.service.G_InfoService;
+import com.sys.serviceImpl.G_InfoServiceImpl;
+
+/**
+ * 商品详情业务层测试
+ * 
+ * @author Administrator
+ *
+ */
+public class G_InfoServiceImplTest {
+
+	public static void main(String[] args) {
+		// queryG_Info();
+		delG_Info();
+		// updateG_Info();
+		// addG_Info();
+	}
+
+	public static void addG_Info() {
+		G_InfoService G_InfoService = new G_InfoServiceImpl();
+		G_Info g_Info = new G_Info();
+		g_Info.setG_ID(6);
+		g_Info.setG_colorsID(3);
+		g_Info.setG_g_price(555);
+		g_Info.setG_number(22);
+		g_Info.setG_sizeID(4);
+		g_Info.setG_integral(200);
+		int num = G_InfoService.addG_Info(g_Info);
+		if (num == 1) {
+			System.out.println("添加商品详情成功");
+		}
+	}
+
+	public static void queryG_Info() {
+		G_InfoService G_InfoService = new G_InfoServiceImpl();
+		List<G_Info> list = G_InfoService.queryG_Info();
+		for (G_Info g_Info : list) {
+			System.out.println(g_Info);
+		}
+	}
+
+	public static void delG_Info() {
+		G_InfoService G_InfoService = new G_InfoServiceImpl();
+		int num = G_InfoService.delG_Info(10);
+		if (num == 1)
+			System.out.println("删除商品详情成功");
+	}
+
+	public static void updateG_Info() {
+		G_InfoService G_InfoService = new G_InfoServiceImpl();
+		G_Info g_Info = new G_Info();
+		g_Info.setG_integral(333);
+		int num = G_InfoService.updateG_Info(11, g_Info);
+		if (num == 1)
+			System.out.println("修改商品详情成功");
+	}
+
+}

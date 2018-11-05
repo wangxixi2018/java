@@ -1,0 +1,55 @@
+package com.sys.test;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.sys.dao.O_statusDao;
+import com.sys.daoImpl.O_statusDaoImpl;
+import com.sys.model.O_Status;
+import com.sys.util.JDBCUtil;
+
+public class O_statusDaoTest {
+
+	public static void main(String[] args) {
+		//修改订单状态测试
+		Connection conn=null;
+		try {
+			conn=JDBCUtil.getConnection();
+			O_statusDao o_statusDao=new O_statusDaoImpl(conn);
+			int o_statusID=1;
+			String o_statusname="支付中";
+			int o_statusnumber=2;
+			O_Status o_Status=new O_Status();
+			o_Status.setO_statusID(o_statusID);
+			o_Status.setO_statusname(o_statusname);
+			o_Status.setO_statusnumber(o_statusnumber);
+			int num=o_statusDao.updateO_status(o_Status);
+			if(num>0) {
+				System.out.println("修改订单状态成功");
+			}else {
+				System.out.println("修改订单状态失败");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//查询订单状态测试
+		try {
+			conn=JDBCUtil.getConnection();
+			O_statusDao o_statusDao=new O_statusDaoImpl(conn);
+			List<O_Status> list=new ArrayList<O_Status>();
+			list=o_statusDao.getAllO_status();
+			if(list==null) {
+				System.out.println("查询订单状态失败");
+			}else {
+				System.out.println("查询订单状态成功");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+}

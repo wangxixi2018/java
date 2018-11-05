@@ -1,0 +1,39 @@
+package com.sys.test;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+
+import com.sys.dao.GoodsDao;
+import com.sys.daoImpl.GoodsDaoImpl;
+import com.sys.model.Goods;
+import com.sys.util.JDBCUtil;
+
+/**
+ * 商品刀层测试
+ * 
+ * @author Administrator
+ *
+ */
+public class GoodsDaoTest {
+
+	public static void main(String[] args) throws SQLException {
+		addGoods();
+	}
+
+	public static void addGoods() throws SQLException {
+		Goods goods = new Goods();
+		// goods.setG_ID(g_ID);
+		goods.setG_describe("22");
+		goods.setG_name("555");
+		goods.setG_sort(1);
+		Connection conn = JDBCUtil.getConnection();
+		GoodsDao goodsDao = new GoodsDaoImpl(conn);
+		int num1 = goodsDao.addGoods(goods);
+		if (num1 == 1) {
+			System.out.println("添加商品成功");
+		} else {
+			System.out.println("添加商品失败");
+		}
+	}
+
+}

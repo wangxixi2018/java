@@ -1,0 +1,14 @@
+package com.sys.dao;
+
+import java.util.List;
+
+import com.sys.model.User;
+
+public interface UserDao {
+	public List<User> getLogin();//登录
+	public int addUser(User user);//注册
+	public int deleteUser(int u_LoginID);//删除
+	public int updateUser(User user);//修改
+	public User findUserByUserId(int u_id);//查询
+	public User findUser(User user);
+}

@@ -1,0 +1,34 @@
+package com.sys.service;
+
+import java.util.List;
+
+import com.sys.model.G_Info;
+
+/**
+ * 商品详情Service 业务层接口
+ * 
+ * @author Administrator
+ *
+ */
+public interface G_InfoService {
+	/**
+	 * 添加商品详情
+	 */
+	int addG_Info(G_Info g_Info);
+
+	/**
+	 * 删除商品详情
+	 * 
+	 */
+	int delG_Info(int g_InfoID);
+
+	/**
+	 * 修改商品详情
+	 */
+	int updateG_Info(int g_InfoID, G_Info g_Info);
+
+	/**
+	 * 查询所有商品详情
+	 */
+	List<G_Info> queryG_Info();
+}

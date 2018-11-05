@@ -1,0 +1,60 @@
+package com.sys.test;
+
+import java.util.List;
+
+import com.sys.model.GoodsMap;
+import com.sys.service.GoodsMapService;
+import com.sys.serviceImpl.GoodsMapServiceImpl;
+
+/**
+ * 商品详情业务层测试
+ * 
+ * @author Administrator
+ *
+ */
+public class GoodsMapServiceImplTest {
+
+	public static void main(String[] args) {
+		// queryGoodsMap();
+		delGoodsMap();
+		// updateGoodsMap();
+		// addGoodsMap();
+	}
+
+	public static void addGoodsMap() {
+		GoodsMapService GoodsMapService = new GoodsMapServiceImpl();
+		GoodsMap goodsMap = new GoodsMap();
+		goodsMap.setG_ID(6);
+		goodsMap.setG_rank(3);
+		goodsMap.setG_src("55646");
+		int num = GoodsMapService.addGoodsMap(goodsMap);
+		if (num == 1) {
+			System.out.println("添加商品图库成功");
+		}
+	}
+
+	public static void queryGoodsMap() {
+		GoodsMapService GoodsMapService = new GoodsMapServiceImpl();
+		List<GoodsMap> list = GoodsMapService.queryGoodsMap();
+		for (GoodsMap goods : list) {
+			System.out.println(goods);
+		}
+	}
+
+	public static void delGoodsMap() {
+		GoodsMapService GoodsMapService = new GoodsMapServiceImpl();
+		int num = GoodsMapService.delGoodsMap(11);
+		if (num == 1)
+			System.out.println("删除商品图库成功");
+	}
+
+	public static void updateGoodsMap() {
+		GoodsMapService GoodsMapService = new GoodsMapServiceImpl();
+		GoodsMap GoodsMap = new GoodsMap();
+		GoodsMap.setG_rank(4);
+		int num = GoodsMapService.updateGoodsMap(11, GoodsMap);
+		if (num == 1)
+			System.out.println("修改商品图库成功");
+	}
+
+}

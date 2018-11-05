@@ -1,0 +1,81 @@
+package com.sys.serviceImpl;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.List;
+
+import com.sys.dao.GoodsMapDao;
+import com.sys.daoImpl.GoodsMapDaoImpl;
+import com.sys.model.GoodsMap;
+import com.sys.service.GoodsMapService;
+import com.sys.util.JDBCUtil;
+
+/**
+ * 商品图库Service 业务层接口实现
+ * 
+ * @author Administrator
+ *
+ */
+public class GoodsMapServiceImpl implements GoodsMapService {
+
+	@Override
+	public int addGoodsMap(GoodsMap goodsMap) {
+		Connection conn = null;
+		try {
+			conn = JDBCUtil.getConnection();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		GoodsMapDao goodsMapDao = new GoodsMapDaoImpl(conn);
+		int num = goodsMapDao.addGoodsMap(goodsMap);
+		JDBCUtil.closeAll(conn, null, null);
+		return num;
+	}
+
+	@Override
+	public int delGoodsMap(int g_Map) {
+		Connection conn = null;
+		try {
+			conn = JDBCUtil.getConnection();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		GoodsMapDao goodsMapDao = new GoodsMapDaoImpl(conn);
+		int num = goodsMapDao.delGoodsMap(g_Map);
+		JDBCUtil.closeAll(conn, null, null);
+		return num;
+	}
+
+	@Override
+	public int updateGoodsMap(int g_Map, GoodsMap goodsMap) {
+		Connection conn = null;
+		try {
+			conn = JDBCUtil.getConnection();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		GoodsMapDao goodsMapDao = new GoodsMapDaoImpl(conn);
+		int num = goodsMapDao.updateGoodsMap(g_Map, goodsMap);
+		JDBCUtil.closeAll(conn, null, null);
+		return num;
+	}
+
+	@Override
+	public List<GoodsMap> queryGoodsMap() {
+		Connection conn = null;
+		try {
+			conn = JDBCUtil.getConnection();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		GoodsMapDao goodsMapDao = new GoodsMapDaoImpl(conn);
+		List<GoodsMap> list = goodsMapDao.queryGoodsMap();
+		JDBCUtil.closeAll(conn, null, null);
+		return list;
+	}
+
+}

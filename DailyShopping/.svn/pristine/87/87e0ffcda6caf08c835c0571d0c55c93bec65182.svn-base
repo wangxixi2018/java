@@ -1,0 +1,102 @@
+package com.sys.serviceImpl;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.List;
+
+import com.sys.dao.BaseDao;
+import com.sys.dao.NewsDao;
+import com.sys.daoImpl.NewsDaoImpl;
+import com.sys.model.News;
+import com.sys.service.NewsService;
+import com.sys.util.JDBCUtil;
+
+public class NewsServiceImpl implements NewsService {
+	@Override
+	public List<News> GetAllNews() {
+		Connection conn=null;
+		List<News>list=null;
+		try {
+			conn=JDBCUtil.getConnection();
+			NewsDao newsdao=new NewsDaoImpl(conn);
+			list=newsdao.GetAllNews();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			JDBCUtil.closeAll(conn, null, null);
+		}
+		return list;
+	}
+
+	@Override
+	public int DelNews(int nid) {
+		Connection conn=null;
+		int num=-1;
+		try {
+			conn=JDBCUtil.getConnection();
+			NewsDao newsdao=new NewsDaoImpl(conn);
+			num=newsdao.DelNews(nid);
+			if(num==1){
+				System.out.println("删除成功");
+			}else{
+				System.out.println("删除失败");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return num;
+	}
+
+	@Override
+	public int AddNews(News news) {
+		Connection conn=null;
+		try {
+			conn=JDBCUtil.getConnection();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		NewsDao newsdao=new NewsDaoImpl(conn);
+		int num=newsdao.AddNews(news);
+		if(num==1){
+			System.out.println("添加成功");
+		}else{
+			System.out.println("添加失败");
+		}
+		return num;
+	}
+	@Override
+	public int UpdateNews(News news) {
+		Connection conn=null;
+		int num=-1;
+		try {
+			conn=JDBCUtil.getConnection();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		NewsDao newsdao=new NewsDaoImpl(conn);
+		num=newsdao.UpdateNews(news);
+		if(num==1){
+			System.out.println("修改成功");
+		}else{
+			System.out.println("修改失败");
+		}
+		return num;
+	}
+	@Override
+	public News GetNewsById(int id) {
+		Connection conn=null;
+		News news=new News();
+		try {
+			conn=JDBCUtil.getConnection();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		NewsDao newsdao=new NewsDaoImpl(conn);
+		news=newsdao.GetNewsByNid(id);
+		return news;
+	}
+
+}

@@ -1,0 +1,59 @@
+package com.sys.model;
+
+import java.io.Serializable;
+
+/**
+ * 商品图库类
+ * 
+ * @author Administrator
+ *
+ */
+public class GoodsMap implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private int g_Map;
+	private int g_ID;
+	private String g_src;
+	private int g_rank;
+
+	public int getG_Map() {
+		return g_Map;
+	}
+
+	public void setG_Map(int g_Map) {
+		this.g_Map = g_Map;
+	}
+
+	public int getG_ID() {
+		return g_ID;
+	}
+
+	public void setG_ID(int g_ID) {
+		this.g_ID = g_ID;
+	}
+
+	public String getG_src() {
+		return g_src;
+	}
+
+	public void setG_src(String g_src) {
+		this.g_src = g_src;
+	}
+
+	public int getG_rank() {
+		return g_rank;
+	}
+
+	public void setG_rank(int g_rank) {
+		this.g_rank = g_rank;
+	}
+
+	@Override
+	public String toString() {
+		return "GoodsMap [g_Map=" + g_Map + ", g_ID=" + g_ID + ", g_src=" + g_src + ", g_rank=" + g_rank + "]";
+	}
+
+}

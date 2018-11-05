@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>天天易购登陆页面</title>
+	<link rel="stylesheet" href="css/login.css" type="text/css">
+<script type="text/javascript" src="js/jquery-1.12.4.js"></script>
+<script type="text/javascript" src="js/login.js"></script>
+</head>
+<body>
+<div id="main">
+<table>
+		<tr>
+			<td><span>账号：</span><input type="text" name="username" id="username" onblur="checkLogin()"><span id="userspan"></span></td>
+		<tr>
+		<tr>
+			<td><span>密码：</span><input type="password" name="password" id="password" onblur="checkLogin()"><span id="pwdspan"></span></td>
+		<tr>
+		<tr>
+			<td><input type="submit" value="登陆" onclick="doUserName()"></td>
+		<tr>
+	</table>
+</div>
+</body>
+</html>

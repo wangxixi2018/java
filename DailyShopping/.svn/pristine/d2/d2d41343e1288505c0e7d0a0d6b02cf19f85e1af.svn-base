@@ -1,0 +1,69 @@
+package com.sys.servlet;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.alibaba.fastjson.JSON;
+import com.sys.model.User;
+import com.sys.service.UserService;
+import com.sys.serviceImpl.UserServiceImpl;
+@WebServlet("/user.do")
+public class UserServlet extends HttpServlet{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private UserService userService = new UserServiceImpl();
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		this.doPost(req, resp);
+	}
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String opr=req.getParameter("opr");
+		System.out.println(opr);
+		if(opr!=null){
+			switch (opr) {
+			case "doUserName":
+				doUserName(req,resp);
+				break;
+
+			default:
+				break;
+			}
+		}
+		
+	}
+	//用户名验证
+	public void doUserName(HttpServletRequest req, HttpServletResponse resp){
+		String username = req.getParameter("name");
+		String password=req.getParameter("password");
+		System.out.println(username);
+		User user = userService.getLogin(username);
+		try {
+			PrintWriter out=resp.getWriter();
+			if(user!=null){
+				if(user.getU_loginPwd().equals(password)){
+					req.getSession().setAttribute("user", user);
+					req.getRequestDispatcher("${pageContext.request.contextPath}/item/Index.html").forward(req, resp);
+				}else{
+					out.write(JSON.toJSONString("密码不正确"));
+				}
+			}else{
+				out.write(JSON.toJSONString("用户不存在"));
+			}
+			out.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	public void addUser(HttpServletRequest req, HttpServletResponse resp){
+		
+	}
+}

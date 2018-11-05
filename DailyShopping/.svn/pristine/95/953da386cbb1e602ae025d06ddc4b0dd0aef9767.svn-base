@@ -1,0 +1,40 @@
+package com.sys.model;
+
+import java.io.Serializable;
+
+public class s_Car implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private int s_carId;//id
+	private int g_id;//商品id
+	private int g_infoId;//商品详情id
+	private int u_id;//用户id
+	public int getS_carId() {
+		return s_carId;
+	}
+	public void setS_carId(int s_carId) {
+		this.s_carId = s_carId;
+	}
+	public int getG_id() {
+		return g_id;
+	}
+	public void setG_id(int g_id) {
+		this.g_id = g_id;
+	}
+	public int getG_infoId() {
+		return g_infoId;
+	}
+	public void setG_infoId(int g_infoId) {
+		this.g_infoId = g_infoId;
+	}
+	public int getU_id() {
+		return u_id;
+	}
+	public void setU_id(int u_id) {
+		this.u_id = u_id;
+	}
+	
+}

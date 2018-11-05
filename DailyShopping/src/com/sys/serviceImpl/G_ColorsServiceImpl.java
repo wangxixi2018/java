@@ -1,0 +1,96 @@
+package com.sys.serviceImpl;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.List;
+
+import com.sys.dao.G_ColorsDao;
+import com.sys.daoImpl.G_ColorsDaoImpl;
+import com.sys.model.G_Colors;
+import com.sys.service.G_ColorsService;
+import com.sys.util.JDBCUtil;
+
+/**
+ * 颜色Service 业务层接口实现
+ * 
+ * @author Administrator
+ *
+ */
+public class G_ColorsServiceImpl implements G_ColorsService {
+
+	@Override
+	public int addG_Colors(String colsrs) {
+		Connection conn = null;
+		try {
+			conn = JDBCUtil.getConnection();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		G_ColorsDao g_ColorsDao = new G_ColorsDaoImpl(conn);
+		int num = g_ColorsDao.addG_Colors(colsrs);
+		JDBCUtil.closeAll(conn, null, null);
+		return num;
+	}
+
+	@Override
+	public int delG_Colors(String colsrs) {
+		Connection conn = null;
+		try {
+			conn = JDBCUtil.getConnection();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		G_ColorsDao g_ColorsDao = new G_ColorsDaoImpl(conn);
+		int num = g_ColorsDao.delG_Colors(colsrs);
+		JDBCUtil.closeAll(conn, null, null);
+		return num;
+	}
+
+	@Override
+	public int updateG_Colors(int g_colorsID, String colsrs) {
+		Connection conn = null;
+		try {
+			conn = JDBCUtil.getConnection();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		G_ColorsDao g_ColorsDao = new G_ColorsDaoImpl(conn);
+		int num = g_ColorsDao.updateG_Colors(g_colorsID, colsrs);
+		JDBCUtil.closeAll(conn, null, null);
+		return num;
+	}
+
+	@Override
+	public List<G_Colors> queryG_Colors() {
+		Connection conn = null;
+		try {
+			conn = JDBCUtil.getConnection();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		G_ColorsDao g_ColorsDao = new G_ColorsDaoImpl(conn);
+		List<G_Colors> list = g_ColorsDao.queryG_Colors();
+		JDBCUtil.closeAll(conn, null, null);
+		return list;
+	}
+
+	@Override
+	public List<G_Colors> queryG_Colors(int g_colorsID) {
+		Connection conn = null;
+		try {
+			conn = JDBCUtil.getConnection();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		G_ColorsDao g_ColorsDao = new G_ColorsDaoImpl(conn);
+		List<G_Colors> list = g_ColorsDao.queryG_Colors(g_colorsID);
+		JDBCUtil.closeAll(conn, null, null);
+		return list;
+	}
+
+}

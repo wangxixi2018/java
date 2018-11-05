@@ -1,0 +1,81 @@
+package com.sys.daoImpl;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.sys.dao.BaseDao;
+import com.sys.dao.GoodsDao;
+import com.sys.model.Goods;
+
+/**
+ * 商品颜色刀层实现
+ * 
+ * @author Administrator
+ *
+ */
+public class GoodsDaoImpl extends BaseDao implements GoodsDao {
+
+	public GoodsDaoImpl(Connection conn) {
+		super(conn);
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public int addGoods(Goods goods) {
+		String sql = "INSERT INTO goods (g_sort,g_name,g_describe) VALUES (?,?,?)";
+		return super.executeUpdate(sql, goods.getG_sort(), goods.getG_name(), goods.getG_describe());
+	}
+
+	@Override
+	public int delGoods(int g_ID) {
+		String sql = "DELETE FROM goods WHERE g_ID=?";
+		return super.executeUpdate(sql, g_ID);
+	}
+
+	@Override
+	public int updateGoods(int g_ID, Goods goods) {
+		StringBuffer sql = new StringBuffer("UPDATE goods SET ");
+		if (goods != null) {
+			if (goods.getG_sort() != 0) {
+				sql.append("g_sort=" + goods.getG_sort() + ",");
+			}
+			if (goods.getG_name() != null) {
+				sql.append("g_name=" + goods.getG_name() + ",");
+			}
+			if (goods.getG_describe() != null) {
+				sql.append("g_describe=" + goods.getG_describe() + ",");
+			}
+			sql.replace(sql.length() - 1, sql.length(), " ");
+			sql.append("WHERE g_ID=? ");
+		} else {
+			return 0;
+		}
+		return super.executeUpdate(sql.toString(), g_ID);
+	}
+
+	@Override
+	public List<Goods> queryGoods() {
+		String sql = "SELECT g_ID,g_sort,g_name,g_describe FROM goods";
+		ResultSet resultSet = super.executeQuery(sql);
+		Goods goods = null;
+		List<Goods> list = new ArrayList<Goods>();
+		try {
+			while (resultSet.next()) {
+				goods = new Goods();
+				goods.setG_ID(resultSet.getInt("g_ID"));
+				goods.setG_sort(resultSet.getInt("g_sort"));
+				goods.setG_name(resultSet.getString("g_name"));
+				goods.setG_describe(resultSet.getString("g_describe"));
+				list.add(goods);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+}

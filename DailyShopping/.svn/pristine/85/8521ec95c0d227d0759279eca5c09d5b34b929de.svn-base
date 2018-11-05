@@ -1,0 +1,71 @@
+package com.sys.daoImpl;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.sys.dao.BaseDao;
+import com.sys.dao.UserDao;
+import com.sys.model.User;
+import com.sys.util.JDBCUtil;
+
+public class UserDaoImpl extends BaseDao implements UserDao{
+
+	public UserDaoImpl(Connection conn) {
+		super(conn);
+		// TODO Auto-generated constructor stub
+	}
+//登陆
+	@Override
+	public List<User> getLogin() {
+		String sql="SELECT * FROM u_login;";
+		ResultSet rs = super.executeQuery(sql);
+		List<User> list = new ArrayList<User>();
+		try {
+			while(rs.next()){
+				User user = new User();
+				user.setU_loginName(rs.getString("u_loginName"));
+				user.setU_loginPwd(rs.getString("u_loginpwd"));
+				list.add(user);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			JDBCUtil.closeAll(null, null, rs);
+		}
+		return list;
+	}
+	//注销
+	@Override
+	public int deleteUser(int u_LoginID) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	//添加注册
+	@Override
+	public int addUser(User user) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	//修改信息
+	@Override
+	public int updateUser(User user) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public User findUserByUserId(int u_id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public User findUser(User user) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

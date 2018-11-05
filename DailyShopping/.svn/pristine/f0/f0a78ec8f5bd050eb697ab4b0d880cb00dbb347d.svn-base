@@ -1,0 +1,87 @@
+package com.sys.model;
+
+import java.io.Serializable;
+
+/**
+ * 商品详情类
+ * 
+ * @author Administrator
+ *
+ */
+public class G_Info implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private int g_InfoID;
+	private int g_ID;
+	private int g_number;
+	private int g_colorsID;
+	private int g_sizeID;
+	private int g_integral;
+	private double g_g_price;
+
+	public int getG_InfoID() {
+		return g_InfoID;
+	}
+
+	public void setG_InfoID(int g_InfoID) {
+		this.g_InfoID = g_InfoID;
+	}
+
+	public int getG_ID() {
+		return g_ID;
+	}
+
+	public void setG_ID(int g_ID) {
+		this.g_ID = g_ID;
+	}
+
+	public int getG_number() {
+		return g_number;
+	}
+
+	public void setG_number(int g_number) {
+		this.g_number = g_number;
+	}
+
+	public int getG_colorsID() {
+		return g_colorsID;
+	}
+
+	public void setG_colorsID(int g_colorsID) {
+		this.g_colorsID = g_colorsID;
+	}
+
+	public int getG_sizeID() {
+		return g_sizeID;
+	}
+
+	public void setG_sizeID(int g_sizeID) {
+		this.g_sizeID = g_sizeID;
+	}
+
+	public int getG_integral() {
+		return g_integral;
+	}
+
+	public void setG_integral(int g_integral) {
+		this.g_integral = g_integral;
+	}
+
+	public double getG_g_price() {
+		return g_g_price;
+	}
+
+	public void setG_g_price(double g_g_price) {
+		this.g_g_price = g_g_price;
+	}
+
+	@Override
+	public String toString() {
+		return "G_Info [g_InfoID=" + g_InfoID + ", g_ID=" + g_ID + ", g_number=" + g_number + ", g_colorsID="
+				+ g_colorsID + ", g_sizeID=" + g_sizeID + ", g_integral=" + g_integral + ", g_g_price=" + g_g_price
+				+ "]";
+	}
+
+}

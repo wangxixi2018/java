@@ -1,0 +1,81 @@
+package com.sys.serviceImpl;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.List;
+
+import com.sys.dao.G_InfoDao;
+import com.sys.daoImpl.G_InfoDaoImpl;
+import com.sys.model.G_Info;
+import com.sys.service.G_InfoService;
+import com.sys.util.JDBCUtil;
+
+/**
+ * 商品详情Service 业务层接口
+ * 
+ * @author Administrator
+ *
+ */
+public class G_InfoServiceImpl implements G_InfoService {
+
+	@Override
+	public int addG_Info(G_Info g_Info) {
+		Connection conn = null;
+		try {
+			conn = JDBCUtil.getConnection();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		G_InfoDao g_InfoDao = new G_InfoDaoImpl(conn);
+		int num = g_InfoDao.addG_Info(g_Info);
+		JDBCUtil.closeAll(conn, null, null);
+		return num;
+	}
+
+	@Override
+	public int delG_Info(int g_InfoID) {
+		Connection conn = null;
+		try {
+			conn = JDBCUtil.getConnection();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		G_InfoDao g_InfoDao = new G_InfoDaoImpl(conn);
+		int num = g_InfoDao.delG_Info(g_InfoID);
+		JDBCUtil.closeAll(conn, null, null);
+		return num;
+	}
+
+	@Override
+	public int updateG_Info(int g_InfoID, G_Info g_Info) {
+		Connection conn = null;
+		try {
+			conn = JDBCUtil.getConnection();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		G_InfoDao g_InfoDao = new G_InfoDaoImpl(conn);
+		int num = g_InfoDao.updateG_Info(g_InfoID, g_Info);
+		JDBCUtil.closeAll(conn, null, null);
+		return num;
+	}
+
+	@Override
+	public List<G_Info> queryG_Info() {
+		Connection conn = null;
+		try {
+			conn = JDBCUtil.getConnection();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		G_InfoDao g_InfoDao = new G_InfoDaoImpl(conn);
+		List<G_Info> list = g_InfoDao.queryG_Info();
+		JDBCUtil.closeAll(conn, null, null);
+		return list;
+	}
+
+}

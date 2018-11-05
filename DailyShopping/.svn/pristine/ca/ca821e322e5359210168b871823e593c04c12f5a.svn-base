@@ -1,0 +1,57 @@
+package com.sys.test;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.List;
+
+import com.sys.dao.NewsDao;
+import com.sys.daoImpl.NewsDaoImpl;
+import com.sys.model.News;
+import com.sys.util.JDBCUtil;
+
+public class NewsTest {
+	public static void main(String[] args) throws SQLException {
+		Connection conn=JDBCUtil.getConnection();
+		NewsDao news=new NewsDaoImpl(conn);
+		/*
+		 * 查询所有新闻测试
+		 * try {
+			Connection conn=JDBCUtil.getConnection();
+			NewsDao news=new NewsDaoImpl(conn);
+			List<News>list=news.GetAllNews();
+			for(News n:list){
+				System.out.println(n.getN_title());
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}*/
+	
+		/*
+		 * 删除新闻测试成功
+		 * int num=news.DelNews(3);
+		if(num==-1){
+			System.out.println("删除失败");
+		}else{
+			System.out.println("删除成功");
+		}*/
+		
+		/*
+		 *添加测试 
+		News n=new News();
+		n.setN_content("添加测试");
+		n.setN_sortid(3);
+		n.setN_title("添加标题");
+		news.AddNews(n);*/
+		/*News n=new News();
+		 * 修改测试
+		n.setN_content("修改测试wq");
+		n.setN_Id(4);
+		news.UpdateNews(n);
+		*/
+		
+		/*
+		查询测试 	
+		News n=news.GetNewsByNid(5);
+		System.out.println(n);*/
+	}
+}
