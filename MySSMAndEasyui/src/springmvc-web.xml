@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:concontext="http://www.springframework.org/schema/context" 
+    xmlns:p="http://www.springframework.org/schema/p" 
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+        <!--开启controller注解扫描-->
+        <concontext:component-scan base-package="com.sys.controller,com.sys.son,com.sys.pojo"></concontext:component-scan>
+        <!--开启springMVC驱动  支持json数据-->
+        <mvc:annotation-driven/>
+        <!-- 静态文件支持 html/css/js/image -->
+        <!--静态资源： mvc:resources  参数1.location： 进入的路径2. mapping：路径（什么路径需要拦截）   eg :拦截后缀名为.html 进入 WebContent/html/中去找这个文件    -->
+        <!--eg意思为：  加入在页面上输入一个 后缀名为：index.html web.xml容器就会匹配 mvc:resources中的 mapping的值  看是否含有符合匹配要求的  匹配有的话 就自动跳转到对应的location的值中去找是否含有输入的页面-->
+        <!-- <mvc:resources location="/html" mapping="/*.html"></mvc:resources>
+        <mvc:resources location="/js/" mapping="/*.doc"></mvc:resources>
+        <mvc:resources location="/css/" mapping="/*.css"></mvc:resources> -->
+        <!-- 推荐吧静态页面放在一个文件中 -->
+        <mvc:resources location="/statics/" mapping="/statics/**"></mvc:resources>
+        <!--视图解析器-->
+        <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" p:prefix="/WEB-INF/jsp/" p:suffix=".jsp"/>
+        <!-- 配置多视图解析器 -->
+	    <!-- <bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+	        <property name="favorParameter" value="true"/> 
+	        <property name="defaultContentType" value="text/html" /> 
+	        <property name="mediaTypes">
+	            <map>
+	            	<entry key="html" value="text/html; charset=UTF-8"/>
+	                <entry key="json" value="application/json; charset=UTF-8"/>
+	                <entry key="xml" value="application/xml; charset=UTF-8"/>
+	            </map>
+	        </property>
+	        <property name="viewResolvers">
+	            <list>
+	            	对转向页面路径解析prefix:前缀 suffix:后缀 
+	                <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+					   <property name="prefix" value="/WEB-INF/jsp/"/>
+					   <property name="suffix" value=".jsp"/>
+				   </bean>
+	            </list>
+	        </property>
+	    </bean> -->
+</beans>

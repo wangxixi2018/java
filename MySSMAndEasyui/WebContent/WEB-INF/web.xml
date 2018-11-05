@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
+  <display-name>MySSMAndEasyui</display-name>
+  <welcome-file-list>
+  <!--多些一个点  会自动找以前的路径-->
+    <welcome-file>./WEB-INF/jsp/index.jsp</welcome-file>
+  </welcome-file-list>
+  <!-- 1.springmvc配置核心控制器 -->
+  <servlet>
+      <!--核心控制器取各名字   springmvc -->
+      <servlet-name>springmvc</servlet-name>
+      <!--DispatcherServlet类的路径-->
+      <servlet-class>
+           org.springframework.web.servlet.DispatcherServlet
+      </servlet-class>
+      <!--初始化参数（相当于配置一个pringMVC配置文件）：DispatcherServlet把某些请求交给特定的控制器（Controller就是servlet）来处理 -->
+      <init-param>
+      	<!--参数：contextConfigLocation：指定spring mvc配置文件的位置的属性名 -->
+         <param-name>contextConfigLocation</param-name>
+         <!--参数：contextConigLocation：指定spring mvc配置文件的位置的属性名对应的值   这里是有的是spring资源路径的方式进行指定(注意这里的springmvc-servlet.xml 必须与创建的springMVC的配置文件名一样) -->
+         <param-value>classpath:springmvc-web.xml</param-value>
+      </init-param>
+      <!--标记容器在启动的时候就加载此DispatcherServlet，即自动启动-->
+      <load-on-startup>1</load-on-startup>
+  </servlet>
+  <!--配置相应的 mapping-->
+  <servlet-mapping>
+  	  <!--对应核心控制器的servlet-name-->
+      <servlet-name>springmvc</servlet-name> 
+      <!--匹配：拦截和处理相应的地址的请求   这里是匹配整个项目所有的请求   /--> 
+      <url-pattern>/</url-pattern>
+  </servlet-mapping>
+  <!-- 2.context加载spring文件 -->
+  <context-param>
+  	<param-name>contextConfigLocation</param-name>
+  	<param-value>classpath:spring-*.xml</param-value>
+  </context-param>
+  <!-- 3.字符过滤 -->
+  <filter>  
+        <filter-name>characterEncodingFilter</filter-name>  
+        <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>  
+        <init-param>  
+            <param-name>encoding</param-name>  
+            <param-value>UTF-8</param-value>  
+        </init-param>  
+        <init-param>  
+            <param-name>forceEncoding</param-name>  
+            <param-value>true</param-value>  
+        </init-param>  
+    </filter>
+  <!-- 过滤器：对应的后缀加入filter-mapping -->
+    <filter-mapping>  
+        <filter-name>characterEncodingFilter</filter-name>  
+        <url-pattern>/*</url-pattern>  
+    </filter-mapping> 
+  <!-- 4.启动监听器、缓存监听器 -->
+  <!-- 监听Spring容器中配置文件，目的是当Tomcat启动后会初始化Spring容器配置文件 -->
+  <listener>
+  	<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+  <!-- Spring刷新Introspector 防止内存溢出 -->
+  <listener>
+  	<listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
+  </listener>
+</web-app>

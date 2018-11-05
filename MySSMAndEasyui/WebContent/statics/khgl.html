@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css"
+	href="easyui/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css" href="easyui/themes/icon.css">
+<link rel="stylesheet" type="text/css" href="icons/iconextension.css">
+<script type="text/javascript" src="easyui/jquery.min.js"></script>
+<script type="text/javascript" src="easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="easyui/locale/easyui-lang-zh_CN.js"></script>
+</head>
+<body>
+	<script type="text/javascript">
+		$(function() {
+			//A: 加载树形菜单数据
+			// alert("55");
+			/* $("#khgl").tree({  //可以吧返回结果自动展示在页面上
+			   url:'khgl.json'
+			}) */
+			$("#khgl").tree({
+				url : 'khgl.json', // 由于有 loadFilter 过滤 属性后,从后台返回的结果 就相当于把返回到前端的数据拦截了 
+				//loadFilter 过滤作用： 把后台过来的数据（这里值不规范的）按 easyui 格式 来 处理后 在返回  
+				//就是把传回的data数据转换成 easyui中tree 要求的格式
+				//每个节点都具备以下属性：
+				//1.  id：节点ID，对加载远程数据很重要。2.text：显示节点文本。3. state：节点状态，'open' 或 'closed'，默认：'open'。如果为'closed'的时候，将不自动展开该节点。
+				//4. checked：表示该节点是否被选中。5.  attributes: 被添加到节点的自定义属性。6.  children: 一个节点数组声明了若干节点。
+
+				loadFilter : function(data) {
+					// alert(data)
+					$.each(data, function(i, o) {
+						// alert("一级："+o.text)
+						$(o.children).each(function(j, k) {
+							// alert("二级："+k.text)
+						})
+					})
+					return data;
+				}
+
+			})
+			
+			//加载表格数据
+			$("#gc").datagrid({
+				 url:"gcgl.json",
+				 //回过滤数据显示。该函数带一个参数'data'用来指向源数据（即：获取的数据源，比如Json对象）。您可以改变源数据的标准数据格式。
+				 //这个函数必须返回包含'total'和'rows'属性的标准数据对象。 
+				 loadFilter:function(data){
+					 return data; 
+				 }
+			})
+		})
+	</script>
+	<!--fit: 自动填满  -->
+	<div  class="easyui-layout" data-options="fit:true">
+	    <div data-options="region:'west',title:'客户管理',width:140" >
+		<!--使用动态是用id, 把class 删除掉 ， 如果不删除 就会想后台请求2次   eg:<ul id="tt" class="easyui-tree"> -->
+			<ul id="khgl"></ul>
+		</div>
+		<div data-options="region:'center',title:'工程管理'">
+					<!-- fitColumns:自动展开/收缩列的大小，以适应网格的宽度，防止水平滚动  true: 开启 -->
+					<!-- url:加载远程数据 -->
+					<!-- singleSelect:如果为true，则只允许选择一行 -->
+					<!-- pagination:如果为true，则在DataGrid控件底部显示分页工具栏 -->
+					<!-- fit:自动填充内容 -->
+			 <table id="gc" class="easyui-datagrid" data-options="fitColumns:true,singleSelect:true,pagination:true,fit:true">   
+			    <thead>   
+			        <tr> 
+			            <!--.json里面的key 必须与这里的field：列字段名称的值一样       checkbox:true,如果为true，则显示复选框。该复选框列固定宽度  -->  
+			            <th data-options="field:'co',checkbox:true,"></th>   
+			            <th data-options="field:'code'">编码</th>   
+			            <th data-options="field:'name'">名称</th>   
+			            <th data-options="field:'price'">价格</th>   
+			        </tr>   
+			    </thead>   
+			</table>     
+		</div>
+	</div>
+</body>
+</html>

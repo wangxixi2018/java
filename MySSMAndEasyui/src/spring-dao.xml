@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd">
+        <!--1.加载属性集文件-->
+        <context:property-placeholder location="classpath:jdbc.properties"/>
+        <!--2.配置数据源-->
+        <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" 
+        p:driverClassName="${mysql.driverclass}" p:url="${mysql.jdbcurl}" p:username="${mysql.user}"
+        p:password="${mysql.password}" p:maxActive="${mysql.maxActive}" p:maxIdle="${mysql.maxIdle}"
+        p:maxWait="${mysql.maxWait}"/>
+        <!--3.加载SessionFactory 会话工厂对象  1.数据源  2.加载mybatis控制文件  3.加载mybatis映射文件-->
+        <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+          	<!-- 数据源id -->
+			<property name="dataSource" ref="dataSource"></property>
+			<!-- Mybatis核心控制文件路径 -->
+			<property name="configLocation" value="classpath:mybatis-config.xml"></property>
+			<!-- Mybatis映射文件路径 -->
+			<property name="mapperLocations" value="classpath:com/sys/dao/mapper/*.xml"></property>
+        </bean>	
+        <!--4.加载Dao层接口 1.Dao层接口  2.整合mybatis会话-->
+        <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+			<!-- 与Mybatis映射文件对应namespace的Dao接口 -->
+			<property name="basePackage" value="com.sys.dao"></property>
+			<!-- Mybatis会话工厂id -->
+			<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+		</bean>
+        <!--5.申明式事务-->
+        <!--1.定义数据源的事务管理器   2.事务处理建议(申明事务什么开始)  3.定义切面,AOP模式配置业务层的声明式事务 -->
+        <!--数据源的事务管理器 dataSource: 数据源     -->
+		<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager" p:dataSource-ref="dataSource"/>
+		<!--事务处理建议(申明事务什么开始) transaction-manager: 指定事务管理器id-->
+		<tx:advice transaction-manager="transactionManager" id="txadvice">
+		   <tx:attributes>
+		      <tx:method name="add*" propagation="REQUIRED" rollback-for="Exception"/>
+		      <tx:method name="del*" propagation="REQUIRED" rollback-for="Exception"/>
+		      <tx:method name="updata*" propagation="REQUIRED" rollback-for="Exception"/>
+		      <tx:method name="*" read-only="true"/>
+		   </tx:attributes>
+		</tx:advice>
+		<!--定义切面,AOP模式配置业务层的声明式事务-->
+		<aop:config>
+		   <aop:pointcut expression="execution(* com.sys.service.*.*(..))" id="aoppointcut"/>
+		   <aop:advisor advice-ref="txadvice" pointcut-ref="aoppointcut"/>
+		</aop:config>
+        <!--6.开启Dao层注解-->
+        </beans>

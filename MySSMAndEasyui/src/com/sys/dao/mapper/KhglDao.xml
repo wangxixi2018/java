@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sys.dao.KhglDao">
+     <!--公用GcmcSon类-->
+  	 <resultMap type="GcmcSon" id="public_GcmcSon">
+  	 	<id column="gcmc_id" property="gcmc_id"/>
+  	 	<result column="gcmc_name" property="gcmc_name"/>
+  	 	<!--一对一-->
+  	 	<association property="khgl" javaType="Khgl" >
+  	 	  <id column="khmc_id" property="khmc_id"/>
+  	 	<result column="khmc_name" property="khmc_name"/>
+  	 	</association>
+  	 </resultMap>
+  	 
+	 <!--查询所有客户信息-->
+     <select  id="getKhgls" resultType="Khgl">
+         SELECT *FROM khmc
+     </select>
+     
+     <!--通过工程id查询指定的客户信息 2张表-->
+     <select id="getGcId" parameterType="int" resultMap="public_GcmcSon">
+       SELECT k.`khmc_name`,g.`gcmc_id`,g.`gcmc_name` FROM khmc k,gcmc g 
+        WHERE k.`khmc_id`=g.`khmc_id`
+        <!--  <if test="khmc_id != 0">-->
+        <if test="_parameter != 0">
+        	AND k.`khmc_id`=#{khmc_id}
+        </if> 
+     </select>
+</mapper>
+

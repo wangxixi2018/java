@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sys.dao.GcmcDao">
+	<!--查询所有工程名称-->
+	<select id="getListGcmc" resultType="Gcmc">
+	  SELECT *FROM gcmc;
+	</select>
+	
+	<!--删除工程（单个或多个）-->
+	<delete id="delGcmc">
+	    DELETE FROM gcmc WHERE gcmc_id IN
+	    <foreach collection="Gcmcid" item="gcmc_id" open="(" separator="," close=")">
+	       #{gcmc_id}
+	    </foreach>    
+	</delete>
+	
+	<!--修改工程-->
+	<update id="updateGcmc" parameterType="Gcmc">
+	  UPDATE gcmc 
+	  <set>
+	     <if test="gcmc_name !=null and gcmc_name !=''">gcmc_name=#{gcmc_name},</if>
+	     <if test="gcmc_name !=null and gcmc_name !=''">gcmc_name=#{gcmc_name},</if>
+	  </set>
+	   WHERE gcmc_id=#{gcmc_id}; 
+	</update>
+	
+	
+	
+	<!--模糊查询 固定单一查询   的工程名称查询-->
+	<resultMap type="GcmcSon" id="public_GcmcSon">
+  	 	<id column="gcmc_id" property="gcmc_id"/>
+  	 	<result column="gcmc_name" property="gcmc_name"/>
+  	 	<!--一对一-->
+  	 	<association property="khgl" javaType="Khgl" >
+  	 	  <id column="khmc_id" property="khmc_id"/>
+  	 	<result column="khmc_name" property="khmc_name"/>
+  	 	</association>
+  	 </resultMap>
+	<select id="selectGcmc" parameterType="string" resultMap="public_GcmcSon">
+	   SELECT k.`khmc_name`,g.`gcmc_id`,g.`gcmc_name` FROM gcmc g,khmc k 
+	      WHERE k.`khmc_id`=g.`khmc_id` and gcmc_name LIKE CONCAT('%',#{select},'%') 
+	</select>
+	
+	<!--模糊查询 动态单一查询    的工程名称查询-->
+	   <!--通过工程id查询指定的客户信息 2张表-->
+     <select id="getGcId" parameterType="GcmcSon" resultMap="public_GcmcSon">
+       SELECT k.`khmc_name`,g.`gcmc_id`,g.`gcmc_name` FROM khmc k,gcmc g 
+        WHERE k.`khmc_id`=g.`khmc_id`
+        <!--  <if test="khmc_id != 0">-->
+        <if test="gcmc_name != null and gcmc_name !=''">
+        	and g.`gcmc_name` LIKE CONCAT('%',#{gcmc_name},'%')
+        </if> 
+        <if test="khgl.khmc_name != null and khgl.khmc_name !=''">
+        	and k.`khmc_name` LIKE CONCAT('%',#{khgl.khmc_name},'%')
+        </if> 
+        <if test="khgl.khmc_id != 0 and khgl.khmc_id !=''">
+        	and k.`khmc_id`=#{khgl.khmc_id}
+        </if> 
+     </select>
+	  
+	  
+	  
+	  
+	<!--添加工程  注意取  khmc_id要多走一层：khgl.khmc_id  因为：GcmcSon类中的属性是khgl-->
+	<insert id="addGcmc" parameterType="GcmcSon">
+	   INSERT  INTO Gcmc(gcmc_name,khmc_id)value(#{gcmc_name},#{khgl.khmc_id})
+	</insert>
+</mapper>
